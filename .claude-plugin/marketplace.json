@@ -1,0 +1,44 @@
+{
+  "name": "mastering-python-skill-plugin",
+  "displayName": "Mastering Python",
+  "description": "Modern Python coaching covering language foundations through advanced production patterns. Provides guidance on Python best practices, type hints, async programming, packaging, virtual environments, and Pydantic validation.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Richard Hightower",
+    "email": "rick@spillwave.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SpillwaveSolutions/mastering-python-skill-plugin"
+  },
+  "keywords": [
+    "python",
+    "testing",
+    "packaging",
+    "fastapi",
+    "pydantic",
+    "async",
+    "poetry"
+  ],
+  "plugins": [
+    {
+      "name": "mastering-python-skill",
+      "type": "skill",
+      "path": "skills/mastering-python-skill"
+    }
+  ],
+  "commands": [
+    {
+      "name": "/python",
+      "description": "Get Python coaching on syntax, patterns, testing, packaging, and best practices",
+      "file": "commands/python.md"
+    }
+  ],
+  "agents": [
+    {
+      "name": "python-expert",
+      "description": "Expert Python development assistant for writing production-quality code",
+      "file": "agents/python-expert.md"
+    }
+  ]
+}
