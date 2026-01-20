@@ -1,13 +1,13 @@
 ---
 name: mastering-python-skill
-description: Modern Python coaching covering language foundations through advanced production patterns. Use when asked to "write Python code", "explain Python concepts", "set up a Python project", "configure Poetry or PDM", "write pytest tests", "create a FastAPI endpoint", "process data with pandas", or "debug Python errors". Triggers on "Python best practices", "type hints", "async Python", "packaging", "virtual environments", "Pydantic validation".
+description: Modern Python coaching covering language foundations through advanced production patterns. Use when asked to "write Python code", "explain Python concepts", "set up a Python project", "configure Poetry or PDM", "write pytest tests", "create a FastAPI endpoint", "run uvicorn server", "configure alembic migrations", "set up logging", "process data with pandas", or "debug Python errors". Triggers on "Python best practices", "type hints", "async Python", "packaging", "virtual environments", "Pydantic validation", "dependency injection", "SQLAlchemy models".
 allowed-tools:
   - Read
   - Write
   - Bash
   - Edit
 metadata:
-  version: 2.0.0
+  version: 2.1.0
   domains:
     - python
     - testing
@@ -23,126 +23,108 @@ Production-ready Python patterns with runnable code examples.
 
 ## Contents
 
-- [Quick Navigation](#quick-navigation)
-- [Quickstart Checklist](#quickstart-checklist)
+- [Workflow](#workflow)
 - [Reference Files](#reference-files)
 - [Sample CLI Tools](#sample-cli-tools)
+- [When NOT to Use](#when-not-to-use)
 - [Full Table of Contents](TOC.md)
 
 ---
 
-## Quick Navigation
+## Workflow
 
-| Topic | Reference |
-|-------|-----------|
-| Type hints, Pydantic | [type-systems.md](references/foundations/type-systems.md) |
-| Project layout | [project-structure.md](references/foundations/project-structure.md) |
-| Linting, formatting | [code-quality.md](references/foundations/code-quality.md) |
-| Async/await patterns | [async-programming.md](references/patterns/async-programming.md) |
-| Error handling | [error-handling.md](references/patterns/error-handling.md) |
-| Decorators | [decorators.md](references/patterns/decorators.md) |
-| Context managers | [context-managers.md](references/patterns/context-managers.md) |
-| Generators | [generators.md](references/patterns/generators.md) |
-| pytest, fixtures | [pytest-essentials.md](references/testing/pytest-essentials.md) |
-| Mocking | [mocking-strategies.md](references/testing/mocking-strategies.md) |
-| Property testing | [property-testing.md](references/testing/property-testing.md) |
-| FastAPI patterns | [fastapi-patterns.md](references/web-apis/fastapi-patterns.md) |
-| Pydantic validation | [pydantic-validation.md](references/web-apis/pydantic-validation.md) |
-| SQLAlchemy async | [database-access.md](references/web-apis/database-access.md) |
-| Poetry workflow | [poetry-workflow.md](references/packaging/poetry-workflow.md) |
-| pyproject.toml | [pyproject-config.md](references/packaging/pyproject-config.md) |
-| Docker deployment | [docker-deployment.md](references/packaging/docker-deployment.md) |
-| CI/CD pipelines | [ci-cd-pipelines.md](references/production/ci-cd-pipelines.md) |
-| Monitoring | [monitoring.md](references/production/monitoring.md) |
-| Security | [security.md](references/production/security.md) |
+### Phase 1: Setup
 
----
+1. Verify Python version
+   ```bash
+   python --version  # Require 3.10+, prefer 3.12+
+   ```
 
-## Quickstart Checklist
+2. Create and activate virtual environment
+   ```bash
+   python -m venv .venv && source .venv/bin/activate
+   ```
 
+3. Install dependencies
+   ```bash
+   poetry install  # or: pip install -r requirements.txt
+   ```
+
+### Phase 2: Develop
+
+4. Reference appropriate patterns:
+   - Types → [type-systems.md](references/foundations/type-systems.md)
+   - Async → [async-programming.md](references/patterns/async-programming.md)
+   - APIs → [fastapi-patterns.md](references/web-apis/fastapi-patterns.md)
+   - DB → [database-access.md](references/web-apis/database-access.md)
+
+5. Follow project structure from [project-structure.md](references/foundations/project-structure.md)
+
+### Phase 3: Validate
+
+6. Run quality checks
+   ```bash
+   ruff check . && ruff format --check .
+   mypy src/
+   ```
+
+7. Run tests with coverage
+   ```bash
+   pytest -v --cov=src --cov-report=term-missing
+   ```
+
+### Phase 4: Deploy
+
+8. Build and verify package
+   ```bash
+   python -m build && twine check dist/*
+   ```
+
+9. Deploy per [docker-deployment.md](references/packaging/docker-deployment.md) or [ci-cd-pipelines.md](references/production/ci-cd-pipelines.md)
+
+**Pre-Completion Checklist:**
 ```
-- [ ] Verify Python: `python --version` (prefer 3.12+)
-- [ ] Create venv: `python -m venv .venv && source .venv/bin/activate`
-- [ ] Install deps: `poetry install` or `pip install -r requirements.txt`
-- [ ] Quality checks: `ruff check . && mypy src/`
-- [ ] Run tests: `pytest -v`
+- [ ] All tests pass
+- [ ] mypy reports no errors
+- [ ] ruff check clean
+- [ ] Coverage ≥80%
+- [ ] No security warnings in dependencies
 ```
-
-### Validation by Domain
-
-| Domain | Smoke Test |
-|--------|------------|
-| FastAPI | `uvicorn main:app --reload` → GET `/health` |
-| Async | `asyncio.run(main())` with awaited I/O |
-| Packaging | `python -m build` → install in temp venv |
-| Database | `alembic upgrade head` → run migration |
 
 ---
 
 ## Reference Files
 
-### Foundations
-| File | Topics |
-|------|--------|
-| [syntax-essentials.md](references/foundations/syntax-essentials.md) | Variables, data types, control flow |
-| [type-systems.md](references/foundations/type-systems.md) | Type hints, generics, protocols |
-| [project-structure.md](references/foundations/project-structure.md) | src layout, __init__.py patterns |
-| [code-quality.md](references/foundations/code-quality.md) | Ruff, Black, mypy configuration |
+| Category | Files | Key Topics |
+|----------|-------|------------|
+| **Foundations** | [syntax-essentials](references/foundations/syntax-essentials.md), [type-systems](references/foundations/type-systems.md), [project-structure](references/foundations/project-structure.md), [code-quality](references/foundations/code-quality.md) | Variables, type hints, generics, src layout, ruff, mypy |
+| **Patterns** | [async-programming](references/patterns/async-programming.md), [error-handling](references/patterns/error-handling.md), [decorators](references/patterns/decorators.md), [context-managers](references/patterns/context-managers.md), [generators](references/patterns/generators.md) | async/await, exceptions, Result type, with statements, yield |
+| **Testing** | [pytest-essentials](references/testing/pytest-essentials.md), [mocking-strategies](references/testing/mocking-strategies.md), [property-testing](references/testing/property-testing.md) | Fixtures, parametrize, unittest.mock, Hypothesis |
+| **Web APIs** | [fastapi-patterns](references/web-apis/fastapi-patterns.md), [pydantic-validation](references/web-apis/pydantic-validation.md), [database-access](references/web-apis/database-access.md) | Dependencies, middleware, validators, SQLAlchemy async |
+| **Packaging** | [poetry-workflow](references/packaging/poetry-workflow.md), [pyproject-config](references/packaging/pyproject-config.md), [docker-deployment](references/packaging/docker-deployment.md) | Lock files, PEP 621, multi-stage builds |
+| **Production** | [ci-cd-pipelines](references/production/ci-cd-pipelines.md), [monitoring](references/production/monitoring.md), [security](references/production/security.md) | GitHub Actions, OpenTelemetry, OWASP, JWT |
 
-### Patterns
-| File | Topics |
-|------|--------|
-| [async-programming.md](references/patterns/async-programming.md) | async/await, asyncio, httpx |
-| [error-handling.md](references/patterns/error-handling.md) | Exceptions, Result types |
-| [decorators.md](references/patterns/decorators.md) | Function/class decorators |
-| [context-managers.md](references/patterns/context-managers.md) | with statements, contextlib |
-| [generators.md](references/patterns/generators.md) | yield, itertools patterns |
-
-### Testing
-| File | Topics |
-|------|--------|
-| [pytest-essentials.md](references/testing/pytest-essentials.md) | Fixtures, markers, parametrize |
-| [mocking-strategies.md](references/testing/mocking-strategies.md) | unittest.mock, pytest-mock |
-| [property-testing.md](references/testing/property-testing.md) | Hypothesis strategies |
-
-### Web APIs
-| File | Topics |
-|------|--------|
-| [fastapi-patterns.md](references/web-apis/fastapi-patterns.md) | Dependency injection, middleware |
-| [pydantic-validation.md](references/web-apis/pydantic-validation.md) | Models, validators, settings |
-| [database-access.md](references/web-apis/database-access.md) | SQLAlchemy async, Alembic |
-
-### Packaging
-| File | Topics |
-|------|--------|
-| [poetry-workflow.md](references/packaging/poetry-workflow.md) | Dependency management, publishing |
-| [pyproject-config.md](references/packaging/pyproject-config.md) | PEP 621, tool configuration |
-| [docker-deployment.md](references/packaging/docker-deployment.md) | Multi-stage builds, compose |
-
-### Production
-| File | Topics |
-|------|--------|
-| [ci-cd-pipelines.md](references/production/ci-cd-pipelines.md) | GitHub Actions, matrix testing |
-| [monitoring.md](references/production/monitoring.md) | Logging, metrics, tracing |
-| [security.md](references/production/security.md) | OWASP, auth, secrets |
+See [TOC.md](TOC.md) for detailed topic lookup.
 
 ---
 
 ## Sample CLI Tools
 
-Runnable examples in [sample-cli/](sample-cli/):
+Runnable examples demonstrating production patterns:
 
-| Tool | Demonstrates |
-|------|-------------|
-| [async_fetcher.py](sample-cli/async_fetcher.py) | Async HTTP with rate limiting |
-| [config_loader.py](sample-cli/config_loader.py) | Pydantic settings, .env files |
-| [db_cli.py](sample-cli/db_cli.py) | SQLAlchemy async CRUD |
+| Tool | Demonstrates | Reference |
+|------|-------------|-----------|
+| [async_fetcher.py](sample-cli/async_fetcher.py) | Async HTTP, rate limiting, error handling | [async-programming.md](references/patterns/async-programming.md) |
+| [config_loader.py](sample-cli/config_loader.py) | Pydantic settings, .env files, validation | [pydantic-validation.md](references/web-apis/pydantic-validation.md) |
+| [db_cli.py](sample-cli/db_cli.py) | SQLAlchemy async CRUD, repository pattern | [database-access.md](references/web-apis/database-access.md) |
+| [code_validator.py](sample-cli/code_validator.py) | Run→check→fix with ruff and mypy | [code-quality.md](references/foundations/code-quality.md) |
 
 ```bash
-# Quick test
+# Test examples
 python sample-cli/async_fetcher.py https://httpbin.org/get
-python sample-cli/config_loader.py
-python sample-cli/db_cli.py init && python sample-cli/db_cli.py list
+python sample-cli/config_loader.py --show-env
+python sample-cli/db_cli.py init --sample-data && python sample-cli/db_cli.py list
+python sample-cli/code_validator.py src/
 ```
 
 ---

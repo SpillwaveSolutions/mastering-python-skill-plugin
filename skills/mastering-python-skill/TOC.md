@@ -12,7 +12,7 @@ Complete reference guide for modern Python development.
 | [Web APIs](#web-apis) | 3 | FastAPI, Pydantic, database access |
 | [Packaging](#packaging) | 3 | Poetry, pyproject.toml, Docker |
 | [Production](#production) | 3 | CI/CD, monitoring, security |
-| [Sample CLI](#sample-cli) | 4 | Runnable example tools |
+| [Sample CLI](#sample-cli) | 5 | Runnable example tools |
 
 ---
 
@@ -101,6 +101,7 @@ Runnable example tools demonstrating patterns.
 | [async_fetcher.py](sample-cli/async_fetcher.py) | Async HTTP with rate limiting | [async-programming.md](references/patterns/async-programming.md) |
 | [config_loader.py](sample-cli/config_loader.py) | Pydantic settings + .env | [pydantic-validation.md](references/web-apis/pydantic-validation.md) |
 | [db_cli.py](sample-cli/db_cli.py) | SQLAlchemy async CRUD | [database-access.md](references/web-apis/database-access.md) |
+| [code_validator.py](sample-cli/code_validator.py) | Run→check→fix validation | [code-quality.md](references/foundations/code-quality.md) |
 
 ---
 
