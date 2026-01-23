@@ -2,11 +2,60 @@
 
 Modern Python coaching covering language foundations through advanced production patterns.
 
-## Installation
+View this skill on the <a href="https://skillzwave.ai/agent-skill/spillwavesolutions__mastering-python-skill-plugin__mastering-python-skill/">skillzwave.ai marketplace</a>
 
+## Installation Instructions
+
+### skilz Installation for Agentic Skill
+View all platforms →
+
+**Claude Code (CLI)**  
+Fast  
 ```bash
-cd ~/.claude/skills
-git clone https://github.com/SpillwaveSolutions/mastering-python-skill-plugin.git
+skilz install SpillwaveSolutions/mastering-python-skill-plugin/mastering-python-skill
+```
+
+**OpenCode (CLI)**  
+Fast  
+```bash
+skilz install SpillwaveSolutions/mastering-python-skill-plugin/mastering-python-skill --agent opencode
+```
+
+**OpenAI Codex (CLI)**  
+Native  
+```bash
+skilz install SpillwaveSolutions/mastering-python-skill-plugin/mastering-python-skill --agent codex
+```
+
+**Gemini CLI (Project)**  
+Project  
+```bash
+skilz install SpillwaveSolutions/mastering-python-skill-plugin/mastering-python-skill --agent gemini
+```
+
+**First time? Install Skilz:**  
+```bash
+pip install skilz
+```
+
+Works with 14 AI coding assistants  
+Cursor, Aider, Copilot, Windsurf, Qwen, Kimi, and more...  
+View All Agents
+
+### For Claude Desktop
+Easy  
+Download Agent Skill ZIP  
+Extract and copy to `~/.claude/skills/` then restart Claude Desktop
+
+### Manual Installation
+1. Clone the repository:
+```bash
+git clone https://github.com/SpillwaveSolutions/mastering-python-skill-plugin
+```
+
+2. Copy the agent skill directory:
+```bash
+cp -r mastering-python-skill-plugin/skills/mastering-python-skill ~/.claude/skills/
 ```
 
 ## Features
